@@ -1,0 +1,11 @@
+{{#each this}}
+<article class="3hour-article">
+  <h3>{{00:00}}</h3>
+
+  <div class="weather-icon">{{weather.icon}}</div>
+  <div class="temp-info">{{main.temp}}</div>
+  <div class="press-info">{{main.pressure}} mm</div>
+  <div class="hum-info">{{main.humidity}} %</div>
+  <div class="wind-info">{{wind[speed]}} m/s</div>
+</article>
+{{/each}}

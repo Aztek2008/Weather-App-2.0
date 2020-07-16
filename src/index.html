@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,300;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+
+    <script
+      src="https://cdn.jsdelivr.net/gh/bigdatacloudapi/js-reverse-geocode-client@latest/bigdatacloud_reverse_geocode.min.js"
+      type="text/javascript"
+    ></script>
+    <title>Weather App</title>
+  </head>
+  <body>
+    <section class="main">
+      <div class="wrapper-for-wrapper">
+        <div class="input-wrapper">
+          <input
+            type="text"
+            class="main-input"
+            placeholder="Enter the city"
+            autofocus
+          />
+          <button class="talk-btn"></button>
+          <button class="save-btn"></button>
+        </div>
+      </div>
+      <!--        SIEMA       -->
+      <div class="input-slider-container">
+        <div class="siema"></div>
+        <!-- <button class="right-click"></button> -->
+      </div>
+      <!--        SIEMA       -->
+      <div class="weather-container">
+        <img class="weather_icon" id="weather_icon" src="#" />
+        <h2 id="weather_city" class="city"></h2>
+        <span id="weather_temp" class="weather-container__temperature">--</span>
+        <div class="temp-container-wrapper">
+          <div class="temp-container">
+            <span class="weather-container__minTemp temp1">min</span>
+            <span id="weather-min_temp" class="temp-value">--</span>
+          </div>
+          <div class="temp-container2">
+            <span class="weather-container__maxTemp temp1">max</span>
+            <span id="weather-max_temp" class="temp-value">--</span>
+          </div>
+        </div>
+      </div>
+      <div class="btn-wrapper2">
+        <button class="todayBTN switchBTN">today</button
+        ><button class="daysBTN switchBTN">5 days</button>
+      </div>
+      <div class="bottom-containers-wrapper">
+        <div class="date-container">
+          <div class="first-row">
+            <span id="date" class="date">--</span>
+            <span id="day" class="day">---</span>
+          </div>
+          <div class="second-row">
+            <ul class="date-info">
+              <li class="bottom-list-items borderstyle">
+                <span id="month" class="month lh">---</span>
+              </li>
+              <li class="bottom-list-items">
+                <span id="current-time-hr" class="current-time lh">--</span
+                ><span id="current-time-min" class="current-time lh">--</span>
+              </li>
+              <li class="bottom-list-items borderstyle">
+                <span id="sunrise" class="sunrise icon-before lh">----</span>
+              </li>
+              <li class="bottom-list-items">
+                <span id="sunset" class="sunset icon-before lh">----</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+         <div class="corona-box">
+          <span class="corona-info">Covid-19 Info</span>
+          <h2 class="covidCountry">----</h2>
+          <div class="covidContainer">
+            <div class="covidFlex">
+              <span>Sick Now:</span> <span class="sickNow"></span>
+            </div>
+            <div class="covidFlex">
+              <span>Today Cases:</span><span class="todayCases"></span>
+            </div>
+            <div class="covidFlex">
+              <span>Recovered Today:</span> <span class="todayRecovered"></span>
+            </div>
+            <div class="covidFlex">
+              <span>Died Today:</span> <span class="todayDeaths"></span>
+            </div>
+            <div class="covidFlex">
+              <span>Total Cases:</span> <span class="totalCases"></span>
+            </div>
+            <div class="covidFlex">
+              <span>Recovered in Total:</span> <span class="recovered"></span>
+            </div>
+            <div class="covidFlex">
+              <span>Died in Total:</span> <span class="deaths"></span>
+            </div>
+          </div>
+        </div>
+        <div class="air-box">
+          <div id="map" style="height: 200px;">
+          
+        </div>
+      </div>
+      </div>
+    </section>
+<section class="modal">
+    <!-- Swiper -->
+    <h2 class="cityName"></h2>
+    <ul class="list--days">
+
+    </ul>
+
+    <ul class="list-modal">
+
+    </ul>
+
+    <div class="show-chart-box">
+      <div class="header-list">
+        <div class="chart-header show-chart-header-js">
+          Show chart
+        </div>
+        <div>
+          <button class="chart-btn show-chart-btn-js">
+            <svg viewbox="0 0 24 24" class="chart-icon">
+              <path d="M7.406 8.578l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-wrapper">
+        <h3 class="chart-title">Average:</h3>
+          <canvas id="myChart"> </canvas>
+      </div>
+    </div>
+     <script src="https://maps.googleapis.com/maps/api/js"></script>
+          <script src="./api/airq.js"></script>
+  </section>
+    <!-- --------------------- MICHAL AND YARIK CODE ----------------------- -->
+
+    <!-- ---------------------- YARIK HTML -------------------- -->
+    <!-- 
+    <section class="modal">
+      <ul class="list--days"></ul>
+
+      <ul class="list-modal notActive">
+        <li class="modal-item">
+          <p class="time">
+            12:00
+          </p>
+          <div class="overlay-icon">
+            <i class="icon-modal">icon</i>
+          </div>
+          <p class="num">-2</p>
+          <ul class="bonus">
+            <li class="bonus-item">
+              <p class="text first">772 mm</p>
+            </li>
+            <li class="bonus-item">
+              <p class="text second">54%</p>
+            </li>
+            <li class="bonus-item">
+              <p class="text third">3.7 m/s</p>
+            </li>
+          </ul>
+        </li>
+        <li class="modal-item">
+          <p class="time">
+            12:00
+          </p>
+          <div class="overlay-icon">
+            <i class="icon-modal">icon</i>
+          </div>
+          <p class="num">-2</p>
+          <ul class="bonus">
+            <li class="bonus-item">
+              <p class="text first">772 mm</p>
+            </li>
+            <li class="bonus-item">
+              <p class="text second">54%</p>
+            </li>
+            <li class="bonus-item">
+              <p class="text third">3.7 m/s</p>
+            </li>
+          </ul>
+        </li>
+        <li class="modal-item">
+          <p class="time">
+            12:00
+          </p>
+          <div class="overlay-icon">
+            <i class="icon-modal">icon</i>
+          </div>
+          <p class="num">-2</p>
+          <ul class="bonus">
+            <li class="bonus-item">
+              <p class="text first">772 mm</p>
+            </li>
+            <li class="bonus-item">
+              <p class="text second">54%</p>
+            </li>
+            <li class="bonus-item">
+              <p class="text third">3.7 m/s</p>
+            </li>
+          </ul>
+        </li>
+        <li class="modal-item">
+          <p class="time">
+            12:00
+          </p>
+          <div class="overlay-icon">
+            <i class="icon-modal">icon</i>
+          </div>
+          <p class="num">-2</p>
+          <ul class="bonus">
+            <li class="bonus-item">
+              <p class="text first">772 mm</p>
+            </li>
+            <li class="bonus-item">
+              <p class="text second">54%</p>
+            </li>
+            <li class="bonus-item">
+              <p class="text third">3.7 m/s</p>
+            </li>
+          </ul>
+        </li>
+        <li class="modal-item">
+          <p class="time">
+            12:00
+          </p>
+          <div class="overlay-icon">
+            <i class="icon-modal">icon</i>
+          </div>
+          <p class="num">-2</p>
+          <ul class="bonus">
+            <li class="bonus-item">
+              <p class="text first">772 mm</p>
+            </li>
+            <li class="bonus-item">
+              <p class="text second">54%</p>
+            </li>
+            <li class="bonus-item">
+              <p class="text third">3.7 m/s</p>
+            </li>
+          </ul>
+        </li>
+        <li class="modal-item">
+          <p class="time">
+            12:00
+          </p>
+          <div class="overlay-icon">
+            <i class="icon-modal">icon</i>
+          </div>
+          <p class="num">-2</p>
+          <ul class="bonus">
+            <li class="bonus-item">
+              <p class="text first">772 mm</p>
+            </li>
+            <li class="bonus-item">
+              <p class="text second">54%</p>
+            </li>
+            <li class="bonus-item">
+              <p class="text third">3.7 m/s</p>
+            </li>
+          </ul>
+        </li>
+        <li class="modal-item">
+          <p class="time">
+            12:00
+          </p>
+          <div class="overlay-icon">
+            <i class="icon-modal">icon</i>
+          </div>
+          <p class="num">-2</p>
+          <ul class="bonus">
+            <li class="bonus-item">
+              <p class="text first">772 mm</p>
+            </li>
+            <li class="bonus-item">
+              <p class="text second">54%</p>
+            </li>
+            <li class="bonus-item">
+              <p class="text third">3.7 m/s</p>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </section> -->
+
+    <!-- ОДИНАКОВЫЕ КНОПКИ - НИЖЕ ЕСТЬ <div class="show-chart-box"> -->
+    <!-- <div class="btn">
+      <h2 class="show--chart">Show Chart</h2>
+      <button class="show--button"></button>
+    </div> -->
+
+    <!-- ---------------------- YARIK HTML -------------------- -->
+
+    <!-- <div class="show-chart-box">
+      <div class="header-list">
+        <div class="chart-header show-chart-header-js">
+          Show chart
+        </div>
+        <div>
+          <button class="chart-btn show-chart-btn-js">
+            <svg viewbox="0 0 24 24" class="chart-icon">
+              <path
+                d="M7.406 8.578l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="chart-box">
+      <div class="header-list">
+        <div class="chart-header hide-chart-header-js">
+          Hide chart
+        </div>
+        <div>
+          <button class="chart-btn hide-chart-btn-js">
+            <svg viewbox="0 0 24 24" class="chart-icon hide-chart-icon">
+              <path
+                d="M7.406 15.422l-1.406-1.406 6-6 6 6-1.406 1.406-4.594-4.594z"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="chart-wrapper">
+        <h3 class="chart-title">Average:</h3>
+        <canvas id="myChart"> </canvas>
+      </div>
+    </div> -->
+
+    <!-- --------------------- MICHAL AND YARIK CODE ----------------------- -->
+  </body>
+</html>

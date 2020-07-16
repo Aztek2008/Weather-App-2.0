@@ -1,0 +1,21 @@
+{{#each this}}
+<article class="3hour-article">
+  <h2>{{name}}, {{sys.country}}</h2>
+  <div class="day-weather">
+    <h3 class="day-header">{{Sunday}}</h3>
+    <span class="day-date">{{DATE}}</span>
+    <span class="weather-icon">{{weather.icon}}</span>
+    <div class="day-temp-minmax">
+      <div class="day-max">
+        <h5>MAX</h5>
+        <span>{{main.temp_max}}</span>
+      </div>
+      <div class="day-min">
+        <h5>MIN</h5>
+        <span>{{main.temp_min}}</span>
+      </div>
+    </div>
+    <button class="day-moreinfo">more info</button>
+  </div>
+</article>
+{{/each}}
