@@ -1,7 +1,7 @@
 {
-  "name": "webpack-starter-kit",
+  "name": "weather-app-2.0",
   "version": "1.1.0",
-  "description": "",
+  "description": "Weather Application for JS Hakaton",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --env.mode development --config ./webpack/config.js",
@@ -11,11 +11,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AleksandrMyk/Project-Weather-App"
+    "url": "git+https://github.com/Aztek2008/Weather-App-2.0"
   },
-  "keywords": [],
-  "author": "Dragon team",
-  "homepage": "https://github.com/AleksandrMyk/Project-Weather-App",
+  "keywords": ["weather-app"],
+  "author": "Skopiuk Oleksii",
+  "homepage": "https://Aztek2008.github.io/Weather-App-2.0",
   "devDependencies": {
     "@babel/core": "^7.10.5",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
