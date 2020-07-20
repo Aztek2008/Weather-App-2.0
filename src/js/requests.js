@@ -1,34 +1,33 @@
 import '@pnotify/core/dist/BrightTheme.css';
 import '@pnotify/core/dist/Material.css';
 import '@pnotify/core/dist/PNotify.css';
-import { defaults } from '@pnotify/core';
+
 import query from '../api/weather';
 import memoryBuilder from '../templates/memory.hbs';
-import Siema from 'siema';
-import fetchCovid from '../api/corona';
 import fetchPixabay from '../api/pixabay';
+import { defaults } from '@pnotify/core';
 import { alert, notice, info, success, error } from '@pnotify/core';
-import getTileUrl from '../api/airq'
+// import getTileUrl from '../api/airq'
 
 const debounce = require('lodash.debounce');
 
 const refs = {
   body: document.querySelector('body'),
   input: document.querySelector('.main-input'),
-  citiesMemory: document.querySelector('.added-city'),
+  saveCityBtn: document.querySelector('.star-btn'),
+  citiesMemory: document.querySelector('.added-city'), // memory.hbs
   deleteCityBtn: document.querySelector('.cross-btn'),
-  saveCityBtn: document.querySelector('.save-btn'),
   citiesContainer: document.querySelector('.siema'),
   weatherContainerLocation: document.querySelector('.city'),
   weatherCity: document.getElementById('weather_city'),
   currentTemp: document.getElementById('weather_temp'),
   minTemp: document.getElementById('weather-min_temp'),
-  //Swtich btn refs
+  // SWITCH BUTTONS
   todayBTN: document.querySelector('.todayBTN'),
   daysBTN: document.querySelector('.daysBTN'),
   maxTemp: document.getElementById('weather-max_temp'),
   weatherIcon: document.getElementById('weather_icon'),
-  //   bottom block
+  // BOTTOM BLOCK
   currentDate: document.getElementById('date'),
   currentDay: document.getElementById('day'),
   currentMonth: document.getElementById('month'),
@@ -38,68 +37,43 @@ const refs = {
   sunset: document.getElementById('sunset'),
 };
 
-//  ===================  CURRENT CITY START CODE =====================
+//  ===================  CURRENT CITY START CODE
 const reverseGeocoder = new BDCReverseGeocode();
 let cityName;
-window.addEventListener('load', loadDefaultRender); ////////////////////////////////////////////// LOADING DOM
+window.addEventListener('load', loadDefaultRender); // LOADING DOM...
 
-function fetchPixabayBgImg(ct) {
-  fetchPixabay.fetchBgImage(ct).then(parsedResponse => {
-    parsedResponse.hits[getRandomInt()].largeImageURL;
-    refs.body.style.backgroundImage = `url(${
-      parsedResponse.hits[getRandomInt()].largeImageURL
-    })`;
+function fetchPixabayBgImg(currentLocation) {
+  fetchPixabay.fetchBgImage(currentLocation).then(parsedResponse => {
+    const backBigImge = parsedResponse.hits[getRandomInt()].largeImageURL;
+    refs.body.style.backgroundImage = `url(${backBigImge})`;
   });
 }
 
 // ===========  CURRENT CITY BY BROWSER'S COORDS
 function loadDefaultRender() {
+
   reverseGeocoder.getClientLocation(function (result) {
-    fetchPixabay.searchQuery = result.localityInfo.administrative[1].name;
-    console.log('CURRENT LOCATION', result.localityInfo.administrative[1].name);
+    const currentLocation = result.localityInfo.administrative[1].name;
+    fetchPixabay.searchQuery = currentLocation;
+    console.log('CURRENT LOCATION', currentLocation);
 
     fetchPixabayBgImg(fetchPixabay.searchQuery);
 
-    //========== WEATHER AT CURRENT CITY =================
+    //============= WEATHER AT CURRENT CITY
     query
-      .fetchWeather(result.localityInfo.administrative[1].name)
-      .then(data => { console.log(data);
-
-        let keys = Object.values(data.sys.country).join('');
-        fetchCovid(keys);
-        
-        let airlon = data.coord.lon;
-        let airlat = data.coord.lat;
-        let map = new google.maps.Map(document.getElementById('map'), {
-          center: new google.maps.LatLng(airlat, airlon),
-          mapTypeId: google.maps.MapTypeId.ROADMAP,
-          zoom: 11,
-        });
-        let t = new Date().getTime();
-        let waqiMapOverlay = new google.maps.ImageMapType({
-          getTileUrl: function (coord, zoom) {
-            return (
-              'https://tiles.aqicn.org/tiles/usepa-aqi/' +
-              zoom +
-              '/' +
-              coord.x +
-              '/' +
-              coord.y +
-              '.png?token=_TOKEN_ID_'
-            );
-          },
-          name: 'Air  Quality',
-
-        });
-        map.overlayMapTypes.insertAt(0, waqiMapOverlay);
-
+      .fetchWeather(currentLocation)
+      .then(data => {
         citiesMemoryMarkUp = {
           name: data.name,
           html: memoryBuilder(data),
         };
+
         updatePageHtml(data);
+
+        refs.weatherIcon.classList.add('visible');
       })
       .catch(err => {
+        console.log('ERRORRRRR')
         const myError = error({
           delay: 2000,
           maxTextHeight: null,
@@ -107,35 +81,23 @@ function loadDefaultRender() {
         });
       });
   });
-}
-//===================  CURRENT CITY END OF CODE========================
+
+};
 
 const storedCities = JSON.parse(localStorage.getItem('Cities'));
-
 const findedCities = [];
 
+//================ ОТРИСОВКА СОХРАНЕННЫХ ГОРОДОВ ИЗ ЛОКАЛСТОРА
 export default { findedCities, storedCities };
-//================ ОТРИСОВКА КАРУСЕЛИ ПРИ ЗАГРУЗКЕ СТРАНИЦЫ ИЗ ЛОКАЛСТОРА
+
 if (storedCities !== null) {
   storedCities.forEach(value => {
     cityName = value;
-    console.log(cityName);
+
     insertCityToTheMemory();
   });
 }
-// } else {
-//   const allLi = storedCities
-//     .map(
-//       city => `
-//     <div id=${city} class="btn-wrapper">
-//       <span class="added-city">${city}</span>
-//       <button class="cross-btn" data-id=${city}></button>
-//     </div>`,
-//     )
-//     .join('');
 
-//   refs.citiesContainer.innerHTML = allLi;
-// }
 let citiesMemoryMarkUp = null;
 
 refs.input.addEventListener('input', debounce(searchFromInput, 1500));
@@ -146,29 +108,29 @@ refs.daysBTN.addEventListener('click', hideAndShowYarik);
 refs.todayBTN.addEventListener('click', hideAndShowSasha);
 
 function hideAndShowYarik() {
-  document.querySelector('.weather-container').classList.add('toright');
+  document.querySelector('.weather-container').classList.add('move-out-of-screen');
   document
-    .querySelector('.bottom-containers-wrapper')
-    .classList.add('tobottom');
+    .querySelector('.date-citation-wrapper')
+    .classList.add('move-down-from-screen');
   setTimeout(() => {
     document.querySelector('.weather-container').style = 'display: none';
-    document.querySelector('.bottom-containers-wrapper').style = 'display:none';
+    document.querySelector('.date-citation-wrapper').style = 'display:none';
     document.querySelector('.modal').style = 'display: block';
   }, 1050);
   setTimeout(() => {
     document.querySelector('.modal').classList.remove('modalEffects');
   }, 1051);
 }
+
 function hideAndShowSasha() {
   document.querySelector('.modal').classList.add('modalEffects');
   document.querySelector('.modal').style = 'display: none';
   document.querySelector('.weather-container').style = 'display: flex';
-  document.querySelector('.bottom-containers-wrapper').style = 'display:flex';
+  document.querySelector('.date-citation-wrapper').style = 'display:flex';
   setTimeout(() => {
-    document.querySelector('.weather-container').classList.remove('toright');
-    document
-      .querySelector('.bottom-containers-wrapper')
-      .classList.remove('tobottom');
+    document.querySelector('.weather-container').classList.remove('move-out-of-screen');
+    document.querySelector('.date-citation-wrapper')
+      .classList.remove('move-down-from-screen');
   }, 10);
 }
 
@@ -185,7 +147,6 @@ function renderCityWeather(e) {
 
   query.fetchWeather(clickedCityName).then(data => {
     let keys = Object.values(data.sys.country).join('');
-    fetchCovid(keys);
     fetchPixabayBgImg(keys);
     updatePageHtml(data);
 
@@ -197,39 +158,13 @@ function renderCityWeather(e) {
     };
   });
 }
+
 function searchFromInput(e) {
   let city = e.target.value;
 
   query
     .fetchWeather(city)
     .then(data => {
-      let keys = Object.values(data.sys.country).join('');
-      fetchCovid(keys);
-
-      let airlon = data.coord.lon;
-      let airlat = data.coord.lat;
-      let map = new google.maps.Map(document.getElementById('map'), {
-        center: new google.maps.LatLng(airlat, airlon),
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        zoom: 11,
-      });
-      let t = new Date().getTime();
-      let waqiMapOverlay = new google.maps.ImageMapType({
-        getTileUrl: function (coord, zoom) {
-          return (
-            'https://tiles.aqicn.org/tiles/usepa-aqi/' +
-            zoom +
-            '/' +
-            coord.x +
-            '/' +
-            coord.y +
-            '.png?token=_TOKEN_ID_'
-          );
-        },
-        name: 'Air  Quality',
-
-      });
-      map.overlayMapTypes.insertAt(0, waqiMapOverlay);
 
       if (data.cod === 200 && !findedCities.includes(data.name)) {
         refs.saveCityBtn.classList.remove('starred');
@@ -242,10 +177,12 @@ function searchFromInput(e) {
         };
         updatePageHtml(data);
       } else {
+        console.log("ERRORRRR AT SEARCH FROM INPUT DOES NOT FALL TO CATCH !!!")
         citiesMemoryMarkUp = null;
       }
     })
     .catch(err => {
+      
       const myError = error({
         delay: 2000,
         maxTextHeight: null,
@@ -255,7 +192,7 @@ function searchFromInput(e) {
 }
 
 function insertCityToTheMemory() {
-  refs.saveCityBtn.classList.add('starred');
+  refs.saveCityBtn.classList.add('starred');//====FIXME:make swich color
   setTimeout(() => {
     refs.saveCityBtn.classList.remove('starred');
   }, 250);
@@ -303,13 +240,16 @@ function removeCityFromMemory(e) {
 function updatePageHtml(data) {
   if (data.cod === 200) {
     let img = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+    console.log('img in update page:', img)
     let dt = new Date(data.dt * 1000);
     refs.weatherIcon.src = img;
     refs.weatherIcon.classList.add('visible');
+    console.log('refs.weatherIcon:', refs.weatherIcon)
     refs.weatherCity.textContent = `${data.name}, ${data.sys.country}`;
-    refs.currentTemp.textContent = `${data.main.temp.toFixed(1)}`;
-    refs.minTemp.textContent = `${data.main.temp_min.toFixed(1)}`;
-    refs.maxTemp.textContent = `${data.main.temp_max.toFixed(1)}`;
+    refs.currentTemp.textContent = `${Math.round (data.main.temp)}`;
+    refs.minTemp.textContent = `${data.main.temp_min}`;
+    refs.maxTemp.textContent = `${data.main.temp_max}`;
+    console.dir(data.main.temp_max)
     refs.currentDate.textContent = dt.getDate();
     refs.currentDay.textContent = dt.toLocaleDateString('en-US', {
       weekday: 'short',

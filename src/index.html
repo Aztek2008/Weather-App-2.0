@@ -21,103 +21,103 @@
   </head>
   <body>
     <section class="main">
-      <div class="wrapper-for-wrapper">
-        <div class="input-wrapper">
-          <input
-            type="text"
-            class="main-input"
-            placeholder="Enter the city"
-            autofocus
-          />
-          <button class="talk-btn"></button>
-          <button class="save-btn"></button>
-        </div>
-      </div>
-      <!--        SIEMA       -->
-      <div class="input-slider-container">
-        <div class="siema"></div>
-        <!-- <button class="right-click"></button> -->
-      </div>
-      <!--        SIEMA       -->
-      <div class="weather-container">
-        <img class="weather_icon" id="weather_icon" src="#" />
-        <h2 id="weather_city" class="city"></h2>
-        <span id="weather_temp" class="weather-container__temperature">--</span>
-        <div class="temp-container-wrapper">
-          <div class="temp-container">
-            <span class="weather-container__minTemp temp1">min</span>
-            <span id="weather-min_temp" class="temp-value">--</span>
+
+      <div class="main-input-container">
+        <div class="input-wrapper-wrapper">
+          <div class="input-wrapper">
+            <input
+              type="text"
+              class="main-input"
+              placeholder="Enter the city..."
+              autofocus
+            />
+            <button class="star-btn"></button>
           </div>
-          <div class="temp-container2">
-            <span class="weather-container__maxTemp temp1">max</span>
-            <span id="weather-max_temp" class="temp-value">--</span>
+          <div class="input-slider-container">
+            <div class="siema"></div>
+            <button class="right-click"></button>
           </div>
         </div>
       </div>
-      <div class="btn-wrapper2">
-        <button class="todayBTN switchBTN">today</button
-        ><button class="daysBTN switchBTN">5 days</button>
-      </div>
-      <div class="bottom-containers-wrapper">
-        <div class="date-container">
-          <div class="first-row">
-            <span id="date" class="date">--</span>
-            <span id="day" class="day">---</span>
-          </div>
-          <div class="second-row">
-            <ul class="date-info">
-              <li class="bottom-list-items borderstyle">
-                <span id="month" class="month lh">---</span>
-              </li>
-              <li class="bottom-list-items">
-                <span id="current-time-hr" class="current-time lh">--</span
-                ><span id="current-time-min" class="current-time lh">--</span>
-              </li>
-              <li class="bottom-list-items borderstyle">
-                <span id="sunrise" class="sunrise icon-before lh">----</span>
-              </li>
-              <li class="bottom-list-items">
-                <span id="sunset" class="sunset icon-before lh">----</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-         <div class="corona-box">
-          <span class="corona-info">Covid-19 Info</span>
-          <h2 class="covidCountry">----</h2>
-          <div class="covidContainer">
-            <div class="covidFlex">
-              <span>Sick Now:</span> <span class="sickNow"></span>
+
+      <div class="exchange-section">
+<!-- FIRST PAGE -->
+
+        <div class="weather-container">
+          <img class="weather_icon" id="weather_icon" src="#" />
+          <h2 id="weather_city" class="city">KYIV, UA</h2>
+          <span id="weather_temp" class="weather-container__temperature">--</span>
+          <div class="temp-container-wrapper">
+            <div class="temp-container">
+              <span class="weather-container__minTemp temp1">min</span>
+              <span id="weather-min_temp" class="temp-value">--</span>
             </div>
-            <div class="covidFlex">
-              <span>Today Cases:</span><span class="todayCases"></span>
-            </div>
-            <div class="covidFlex">
-              <span>Recovered Today:</span> <span class="todayRecovered"></span>
-            </div>
-            <div class="covidFlex">
-              <span>Died Today:</span> <span class="todayDeaths"></span>
-            </div>
-            <div class="covidFlex">
-              <span>Total Cases:</span> <span class="totalCases"></span>
-            </div>
-            <div class="covidFlex">
-              <span>Recovered in Total:</span> <span class="recovered"></span>
-            </div>
-            <div class="covidFlex">
-              <span>Died in Total:</span> <span class="deaths"></span>
+            <div class="temp-container2">
+              <span class="weather-container__maxTemp temp1">max</span>
+              <span id="weather-max_temp" class="temp-value">--</span>
             </div>
           </div>
         </div>
-        <div class="air-box">
-          <div id="map" style="height: 200px;">
-          
+
+        <div class="foracast-buttons-container">
+          <button class="todayBTN switch-btn">today</button>
+          <button class="daysBTN switch-btn">5 days</button>
         </div>
-      </div>
-      </div>
-    </section>
+
+        <div class="date-citation-wrapper">
+          <div class="date-container">
+            <div class="first-row">
+              <span id="date" class="date">--</span>
+              <span id="day" class="day">---</span>
+            </div>
+            <div class="second-row">
+              <div class="date-infolist">
+
+                <div class="month-time-wrapper">
+                  <div class="date-infolist-items borderstyle">
+                    <span id="month" class="month lh">---</span>
+                  </div>
+  
+                  <div class="date-infolist-items">
+                    <span id="current-time-hr" class="current-time lh">--</span>
+                    <span id="current-time-min" class="current-time lh">--</span>
+                  </div>
+                </div>
+
+                <div class="sunrise-sunset-wrapper">
+                  <div class="date-infolist-items borderstyle">
+                    <span id="sunrise" class="sunrise icon-before lh">----</span>
+                  </div>
+
+                  <div class="date-infolist-items">
+                    <span id="sunset" class="sunset icon-before lh">----</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="citation-container">
+            <p class="quotation">
+              Who cares about the clouds when we're
+              together? Just sing a song and bring
+              the sunny weather.
+            </p>
+            <br>
+            <p class="quotation author">
+              <span class="author-span">
+                Dale Evans
+              </span>
+            </p>
+          </div>
+        </div>
+
+<!-- FIRST PAGE -->
+
+<!-- 5 DAYS -->
+
 <section class="modal">
-    <!-- Swiper -->
     <h2 class="cityName"></h2>
     <ul class="list--days">
 
@@ -147,13 +147,20 @@
           <canvas id="myChart"> </canvas>
       </div>
     </div>
-     <script src="https://maps.googleapis.com/maps/api/js"></script>
-          <script src="./api/airq.js"></script>
+     
   </section>
+
+<!-- 5 DAYS -->
+      </div>
+
+    </section>
+
+
+
     <!-- --------------------- MICHAL AND YARIK CODE ----------------------- -->
 
     <!-- ---------------------- YARIK HTML -------------------- -->
-    <!-- 
+    
     <section class="modal">
       <ul class="list--days"></ul>
 
@@ -299,7 +306,7 @@
           </ul>
         </li>
       </ul>
-    </section> -->
+    </section>
 
     <!-- ОДИНАКОВЫЕ КНОПКИ - НИЖЕ ЕСТЬ <div class="show-chart-box"> -->
     <!-- <div class="btn">
@@ -309,7 +316,7 @@
 
     <!-- ---------------------- YARIK HTML -------------------- -->
 
-    <!-- <div class="show-chart-box">
+    <div class="show-chart-box">
       <div class="header-list">
         <div class="chart-header show-chart-header-js">
           Show chart
@@ -341,11 +348,11 @@
         </div>
       </div>
 
-      <div class="chart-wrapper">
+      <!-- <div class="chart-wrapper">
         <h3 class="chart-title">Average:</h3>
         <canvas id="myChart"> </canvas>
-      </div>
-    </div> -->
+      </div> -->
+    </div>
 
     <!-- --------------------- MICHAL AND YARIK CODE ----------------------- -->
   </body>

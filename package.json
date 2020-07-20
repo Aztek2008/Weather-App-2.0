@@ -13,7 +13,9 @@
     "type": "git",
     "url": "git+https://github.com/Aztek2008/Weather-App-2.0"
   },
-  "keywords": ["weather-app"],
+  "keywords": [
+    "weather-app"
+  ],
   "author": "Skopiuk Oleksii",
   "homepage": "https://Aztek2008.github.io/Weather-App-2.0",
   "devDependencies": {
@@ -51,7 +53,6 @@
     "lodash.debounce": "^4.0.8",
     "moment-timezone": "^0.5.31",
     "pnotify": "^5.1.2",
-    "siema": "^1.5.1",
     "swiper": "^6.0.4"
   }
 }

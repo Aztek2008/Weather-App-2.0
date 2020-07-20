@@ -1,9 +1,8 @@
 import './api/weather';
-import './styles.css';
-import './main.css';
+import './styles.scss';
 import './js/requests';
-import './js/speech';
-import './api/airq';
+// import './js/speech';
+// import './api/airq';
 import './js/work2';
-import './js/work6';
+// import './js/work6';
 

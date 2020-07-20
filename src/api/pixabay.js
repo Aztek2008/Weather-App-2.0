@@ -1,6 +1,6 @@
 const baseUrl =
   'https://pixabay.com/api/?image_type=photo&orientation=horizontal&category=places,buildings';
-// ЗАМЕНИТЬ ПИКСАБЭЙ НА ГУГЛ АПИ
+// ЗАМЕНИТЬ ПИКСАБЭЙ НА ГУГЛ АПИ?
 
 export default {
   query: '',
