@@ -49,7 +49,7 @@
   "dependencies": {
     "chart.js": "^2.9.3",
     "core-js": "^3.6.5",
-    "handlebars": "^4.7.6",
+    "handlebars": "^4.7.7",
     "lodash.debounce": "^4.0.8",
     "moment-timezone": "^0.5.31",
     "pnotify": "^5.1.2",
