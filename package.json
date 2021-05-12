@@ -53,6 +53,6 @@
     "lodash.debounce": "^4.0.8",
     "moment-timezone": "^0.5.31",
     "pnotify": "^5.1.2",
-    "swiper": "^6.0.4"
+    "swiper": "^6.5.1"
   }
 }
