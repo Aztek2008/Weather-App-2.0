@@ -51,7 +51,7 @@
     "core-js": "^3.6.5",
     "handlebars": "^4.7.6",
     "lodash.debounce": "^4.0.8",
-    "moment-timezone": "^0.5.31",
+    "moment-timezone": "^0.5.35",
     "pnotify": "^5.1.2",
     "swiper": "^6.0.4"
   }
